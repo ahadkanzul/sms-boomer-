@@ -3,44 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AHAD SMS BOOMER v.5.0</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <title>AHAD // SMS_BOOMER_v5.0</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --bg-dark: #0a0f0d; 
-            --surface-color: #0d1411; 
-            --border-color: #1c2e25;
-            --hacker-green: #00ff41; 
-            --hacker-red: #ff004f;
-            --text-color: #e6f1ea; 
-            --text-muted: #6a7d75; 
-            --font-mono: 'Share Tech Mono', monospace;
-        }
-        
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
         }
         
         body {
-            font-family: var(--font-mono); 
-            background-color: var(--bg-dark); 
-            color: var(--text-color);
-            min-height: 100vh;
+            background: #0a0f0d;
+            color: #00ff41;
+            line-height: 1.6;
             padding: 15px;
+            max-width: 100%;
+            overflow-x: hidden;
             background-image: 
                 radial-gradient(circle at 20% 30%, rgba(18, 28, 24, 0.7) 0%, transparent 40%),
                 radial-gradient(circle at 80% 70%, rgba(18, 28, 24, 0.7) 0%, transparent 40%);
-            overflow-x: hidden;
-        }
-        
-        /* Terminal-like cursor animation */
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+            position: relative;
         }
         
         /* Scanline effect */
@@ -50,10 +33,7 @@
             left: 0;
             width: 100%;
             height: 2px;
-            background: linear-gradient(to bottom, 
-                transparent, 
-                var(--hacker-green) 50%, 
-                transparent);
+            background: linear-gradient(to bottom, transparent, #00ff41 50%, transparent);
             opacity: 0.1;
             z-index: 9999;
             pointer-events: none;
@@ -70,260 +50,262 @@
             margin: 0 auto;
         }
         
-        .site-header { 
-            text-align: center; 
-            margin-bottom: 25px; 
-            position: relative;
+        .header {
+            text-align: center;
             padding: 15px 0;
-            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+            border-bottom: 1px solid #1c2e25;
+            position: relative;
         }
         
-        .site-header h1 { 
-            font-size: 1.5rem; 
-            font-weight: 400; 
-            color: var(--hacker-green);
-            margin-bottom: 8px; 
-            letter-spacing: 1px;
+        .header h1 {
+            font-size: 1.5rem;
+            color: #00ff41;
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px #00ff41;
+            letter-spacing: 2px;
         }
         
-        .site-header p { 
-            color: var(--text-muted); 
+        .header p {
+            color: #6a7d75;
             font-size: 0.8rem;
         }
         
         .status-indicator {
             display: inline-block;
-            width: 6px;
-            height: 6px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            margin-right: 5px;
-            background-color: var(--hacker-green);
-            box-shadow: 0 0 5px var(--hacker-green);
+            background-color: #00ff41;
+            box-shadow: 0 0 5px #00ff41;
+            margin-right: 8px;
         }
         
-        .control-panel-container { 
-            background-color: var(--surface-color); 
-            border-radius: 5px; 
-            padding: 20px 15px; 
-            width: 100%; 
-            border: 1px solid var(--border-color);
-            position: relative;
-            overflow: hidden;
+        .panel {
+            background: #0d1411;
+            border-radius: 8px;
+            padding: 20px;
             margin-bottom: 20px;
+            border: 1px solid #1c2e25;
+            position: relative;
         }
         
-        .control-panel-container::before {
+        .panel::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(to right, 
-                transparent, 
-                var(--hacker-green), 
-                transparent);
+            background: linear-gradient(to right, transparent, #00ff41, transparent);
         }
         
-        /* --- Form & Button --- */
-        .form-controls { 
-            display: flex; 
-            flex-direction: column;
-            gap: 20px; 
-            margin-bottom: 20px; 
+        .form-group {
+            margin-bottom: 20px;
         }
         
-        .form-group { 
-            position: relative; 
-        }
-        
-        .form-group label { 
-            display: block; 
-            margin-bottom: 8px; 
-            color: var(--text-muted); 
-            font-size: 0.8rem;
-        }
-        
-        .form-group input[type="tel"] { 
-            width: 100%; 
-            padding: 12px 12px 12px 25px; 
-            border: 1px solid var(--border-color); 
-            border-radius: 4px; 
-            font-family: var(--font-mono);
-            font-size: 0.9rem; 
-            background: rgba(10, 15, 13, 0.7); 
-            color: var(--text-color); 
-        }
-        
-        .form-group::before { 
-            content: '>'; 
-            position: absolute; 
-            left: 12px; 
-            top: 37px; 
-            color: var(--hacker-green); 
-        }
-        
-        .intensity-control { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-        
-        .intensity-control input[type="radio"] { 
-            display: none; 
-        }
-        
-        .intensity-control label {
-            padding: 10px 5px; 
-            text-align: center; 
-            cursor: pointer;
-            background: rgba(10, 15, 13, 0.7); 
-            color: var(--text-muted);
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 0.8rem;
-        }
-        
-        .intensity-control input[type="radio"]:checked + label { 
-            background: rgba(0, 255, 65, 0.15); 
-            color: var(--hacker-green); 
-            border-color: var(--hacker-green);
-        }
-        
-        #trigger-btn { 
-            border: 1px solid var(--hacker-green);
-            padding: 14px; 
-            border-radius: 4px; 
-            font-size: 0.9rem; 
-            cursor: pointer; 
-            width: 100%; 
-            text-transform: uppercase; 
-            margin-top: 10px; 
-            background-color: rgba(0, 255, 65, 0.1); 
-            color: var(--hacker-green);
-            font-family: var(--font-mono);
-        }
-        
-        #trigger-btn:active { 
-            background-color: rgba(0, 255, 65, 0.2);
-        }
-        
-        #trigger-btn:disabled { 
-            background: rgba(106, 125, 117, 0.2); 
-            border-color: var(--text-muted); 
-            color: var(--text-muted);
-            cursor: not-allowed; 
-        }
-
-        /* --- Results & Log --- */
-        .results-area { 
-            margin-top: 20px; 
-        }
-        
-        .results-area label {
+        .form-group label {
             display: block;
             margin-bottom: 8px;
-            color: var(--text-muted);
-            font-size: 0.8rem;
+            color: #6a7d75;
+            font-size: 0.9rem;
         }
         
-        #system-log-live {
-            font-size: 0.75rem; 
-            min-height: 120px; 
-            max-height: 200px;
-            overflow-y: auto; 
-            border-radius: 4px; 
-            padding: 12px;
-            background-color: rgba(10, 15, 13, 0.7); 
-            border: 1px solid var(--border-color);
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #1c2e25;
+            border-radius: 6px;
+            background: rgba(10, 15, 13, 0.7);
+            color: #e6f1ea;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #00ff41;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+        }
+        
+        .intensity-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .intensity-option {
+            padding: 12px 5px;
+            text-align: center;
+            background: rgba(10, 15, 13, 0.7);
+            border: 1px solid #1c2e25;
+            border-radius: 6px;
+            color: #6a7d75;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .intensity-option.active {
+            background: rgba(0, 255, 65, 0.15);
+            color: #00ff41;
+            border-color: #00ff41;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 255, 65, 0.1);
+            color: #00ff41;
+            border: 1px solid #00ff41;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+        
+        .btn:active {
+            background: rgba(0, 255, 65, 0.2);
+            transform: translateY(2px);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .log-container {
+            margin-top: 20px;
+        }
+        
+        .log-container label {
+            display: block;
+            margin-bottom: 8px;
+            color: #6a7d75;
+            font-size: 0.9rem;
+        }
+        
+        .log {
+            height: 150px;
+            overflow-y: auto;
+            background: rgba(10, 15, 13, 0.7);
+            border: 1px solid #1c2e25;
+            border-radius: 6px;
+            padding: 15px;
+            font-size: 0.85rem;
             line-height: 1.5;
         }
         
-        #system-log-live .log-entry { 
-            margin-bottom: 6px;
+        .log-entry {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
         }
         
-        #system-log-live::-webkit-scrollbar { 
-            width: 5px; 
+        .log-prefix {
+            color: #00ff41;
+            margin-right: 8px;
         }
         
-        #system-log-live::-webkit-scrollbar-track { 
-            background: var(--bg-dark); 
+        .log-success {
+            color: #00ff41;
         }
         
-        #system-log-live::-webkit-scrollbar-thumb { 
-            background: var(--border-color); 
-            border-radius: 2px; 
+        .log-error {
+            color: #ff004f;
         }
         
-        .result-summary {
-            margin-top: 15px;
+        .log-info {
+            color: #6a7d75;
+        }
+        
+        .summary {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 10px;
+            margin-top: 15px;
             text-align: center;
+        }
+        
+        .summary-item {
             padding: 12px;
             background: rgba(10, 15, 13, 0.7);
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
+            border: 1px solid #1c2e25;
+            border-radius: 6px;
         }
         
-        .summary-item strong { 
-            display: block; 
-            font-size: 1.2rem; 
+        .summary-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: block;
         }
         
-        .summary-item .success { 
-            color: var(--hacker-green); 
-        }
-        
-        .summary-item .failure { 
-            color: var(--hacker-red); 
-        }
-        
-        .summary-item span {
-            color: var(--text-muted);
+        .summary-label {
             font-size: 0.7rem;
+            color: #6a7d75;
+            display: block;
+            margin-top: 5px;
         }
         
-        .site-footer { 
-            text-align: center; 
-            color: var(--text-muted); 
-            font-size: 0.7rem; 
+        .success-value {
+            color: #00ff41;
+        }
+        
+        .failure-value {
+            color: #ff004f;
+        }
+        
+        .footer {
+            text-align: center;
             padding: 15px 0;
-            border-top: 1px solid var(--border-color);
+            color: #6a7d75;
+            font-size: 0.75rem;
+            border-top: 1px solid #1c2e25;
+            margin-top: 20px;
         }
         
-        .site-footer p { 
-            margin-bottom: 8px; 
-        }
-        
-        .site-footer a { 
-            color: var(--hacker-green); 
-            text-decoration: none; 
+        .footer a {
+            color: #00ff41;
+            text-decoration: none;
         }
         
         .spinner {
             display: inline-block;
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             border: 2px solid rgba(0, 255, 65, 0.3);
             border-radius: 50%;
-            border-top-color: var(--hacker-green);
-            animation: spin 1s ease-in-out infinite;
+            border-top-color: #00ff41;
+            animation: spin 1s linear infinite;
         }
         
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
         
-        /* Mobile-specific adjustments */
+        /* Matrix rain effect */
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        /* Responsive adjustments */
         @media (max-width: 340px) {
-            .intensity-control {
+            .intensity-selector {
                 grid-template-columns: 1fr;
             }
             
-            .site-header h1 {
+            .header h1 {
                 font-size: 1.3rem;
             }
         }
@@ -331,180 +313,255 @@
 </head>
 <body>
     <div class="scanline"></div>
+    <div class="matrix-rain" id="matrixRain"></div>
     
     <div class="container">
-        <header class="site-header">
-            <h1>AHAD SMS BOOMER v5.0</h1>
+        <header class="header">
+            <h1>AHAD // SMS_BOOMER_v5.0</h1>
             <p><span class="status-indicator"></span>ANONYMOUS TRANSMISSION PROTOCOL</p>
         </header>
-
-        <main class="control-panel-container">
-            <div class="form-controls">
-                <div class="form-group">
-                    <label for="recipient-number">TARGET_NODE</label>
-                    <input type="tel" id="recipient-number" placeholder="e.g., 923xxxxxxxxx" inputmode="numeric">
+        
+        <div class="panel">
+            <div class="form-group">
+                <label for="phone">TARGET_NODE</label>
+                <input type="tel" id="phone" placeholder="e.g., 923xxxxxxxxx" inputmode="numeric">
+            </div>
+            
+            <div class="form-group">
+                <label>ATTACK_INTENSITY</label>
+                <div class="intensity-selector">
+                    <div class="intensity-option active" data-value="10">Low (10)</div>
+                    <div class="intensity-option" data-value="25">Normal (25)</div>
+                    <div class="intensity-option" data-value="50">High (50)</div>
+                    <div class="intensity-option" data-value="100">Extreme (100)</div>
                 </div>
-                <div class="form-group">
-                    <label>ATTACK_INTENSITY</label>
-                    <div class="intensity-control" id="intensity-selector">
-                        <input type="radio" id="intensity-low" name="intensity" value="10" checked>
-                        <label for="intensity-low">Low (10)</label>
-                        
-                        <input type="radio" id="intensity-normal" name="intensity" value="25">
-                        <label for="intensity-normal">Normal (25)</label>
-                        
-                        <input type="radio" id="intensity-high" name="intensity" value="50">
-                        <label for="intensity-high">High (50)</label>
-                        
-                        <input type="radio" id="intensity-extreme" name="intensity" value="100">
-                        <label for="intensity-extreme">Extreme (100)</label>
+            </div>
+            
+            <button id="attack-btn" class="btn">INITIATE ATTACK</button>
+        </div>
+        
+        <div class="panel">
+            <div class="log-container">
+                <label>SYSTEM_LOG <span class="status-indicator"></span></label>
+                <div class="log" id="log">
+                    <div class="log-entry">
+                        <span class="log-prefix">></span>
+                        <span class="log-info">SYSTEM: Ready. Awaiting target input...</span>
                     </div>
                 </div>
             </div>
-            <button id="trigger-btn">INITIATE ATTACK</button>
-            <div class="results-area">
-                <label>SYSTEM_LOG <span class="status-indicator"></span></label>
-                <div id="system-log-live"></div>
+            
+            <div class="summary">
+                <div class="summary-item">
+                    <span class="summary-value success-value" id="success-count">0</span>
+                    <span class="summary-label">SUCCESS</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-value failure-value" id="failure-count">0</span>
+                    <span class="summary-label">FAILURE</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-value" id="total-count">0</span>
+                    <span class="summary-label">TOTAL</span>
+                </div>
             </div>
-        </main>
-
-        <footer class="site-footer">
-            <p>© 2025 AHAD NETWORKS. ALL RIGHTS RESERVED.</p>
+        </div>
+        
+        <footer class="footer">
+            <p>© 2024 AHAD NETWORKS. ALL RIGHTS RESERVED.</p>
             <p>FOR EDUCATIONAL PURPOSES ONLY.</p>
             <p><a href="https://wa.me/message/PIMTMADGNLZFJ1" target="_blank">CONTACT OPERATOR</a></p>
         </footer>
     </div>
 
     <script>
-        const SMSMatrix = {
-            init() {
-                this.ui = {
-                    recipientInput: document.getElementById('recipient-number'),
-                    triggerBtn: document.getElementById('trigger-btn'),
-                    systemLog: document.getElementById('system-log-live'),
-                };
-                this.API_BASE_URL = 'https://fak-sms-boomber.jokerkeep057.workers.dev/';
-                this.API_KEY = '32563';
-                
-                this.setupEventListeners();
-                this.logMessage('SYSTEM: Ready. Awaiting target input...');
-            },
-
-            setupEventListeners() {
-                this.ui.triggerBtn.addEventListener('click', () => this.startProcess());
-                
-                // Improve mobile UX - close keyboard when tapping outside
-                document.addEventListener('touchstart', (e) => {
-                    if (e.target === this.ui.recipientInput) return;
-                    this.ui.recipientInput.blur();
-                });
-            },
-
-            logMessage(text, type = 'INFO') {
-                const entry = document.createElement('div');
-                entry.className = 'log-entry';
-                let color = 'var(--text-muted)';
-                if (type === 'SUCCESS') color = 'var(--hacker-green)';
-                if (type === 'ERROR') color = 'var(--hacker-red)';
-                entry.style.color = color;
-                entry.textContent = `> ${type}: ${text}`;
-                this.ui.systemLog.appendChild(entry);
-                this.ui.systemLog.scrollTop = this.ui.systemLog.scrollHeight;
-            },
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM elements
+            const phoneInput = document.getElementById('phone');
+            const attackBtn = document.getElementById('attack-btn');
+            const logContainer = document.getElementById('log');
+            const successCount = document.getElementById('success-count');
+            const failureCount = document.getElementById('failure-count');
+            const totalCount = document.getElementById('total-count');
+            const intensityOptions = document.querySelectorAll('.intensity-option');
             
-            setButtonState(isLoading) {
-                this.ui.triggerBtn.disabled = isLoading;
-                this.ui.triggerBtn.innerHTML = isLoading ? '<div class="spinner"></div>' : 'INITIATE ATTACK';
-            },
-
-            displaySummary(data) {
-                const summaryDiv = document.createElement('div');
-                summaryDiv.className = 'result-summary';
-                summaryDiv.innerHTML = `
-                    <div class="summary-item">
-                        <strong class="success">${data.successCount}</strong>
-                        <span>SUCCESS</span>
-                    </div>
-                    <div class="summary-item">
-                        <strong class="failure">${data.failureCount}</strong>
-                        <span>FAILURE</span>
-                    </div>
-                    <div class="summary-item">
-                        <strong>${data.totalRequests}</strong>
-                        <span>TOTAL</span>
-                    </div>
-                `;
-                this.ui.systemLog.appendChild(summaryDiv);
-            },
-
-            async startProcess() {
-                const recipientNumber = this.ui.recipientInput.value.trim();
-                const count = document.querySelector('input[name="intensity"]:checked').value;
-
-                if (!recipientNumber || !/^\d{10,14}$/.test(recipientNumber)) {
-                    this.logMessage('Invalid target format (10-14 digits required).', 'ERROR');
+            // State variables
+            let selectedIntensity = 10;
+            let isAttacking = false;
+            
+            // Initialize intensity selector
+            intensityOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    intensityOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    selectedIntensity = parseInt(this.getAttribute('data-value'));
+                });
+            });
+            
+            // Attack button handler
+            attackBtn.addEventListener('click', function() {
+                if (isAttacking) return;
+                
+                const phoneNumber = phoneInput.value.trim();
+                
+                if (!phoneNumber || !/^\d{10,14}$/.test(phoneNumber)) {
+                    addLogEntry('Invalid target format (10-14 digits required).', 'error');
                     return;
                 }
-
-                this.setButtonState(true);
-                this.ui.systemLog.innerHTML = '';
-                this.logMessage(`Initializing attack on ${recipientNumber}...`);
-                this.logMessage(`Sending ${count} packets through secure channels...`);
                 
-                // Add some hacker-style loading messages
-                const loadingMessages = [
+                startAttack(phoneNumber, selectedIntensity);
+            });
+            
+            // Start attack simulation
+            function startAttack(phone, intensity) {
+                isAttacking = true;
+                attackBtn.disabled = true;
+                attackBtn.innerHTML = '<div class="spinner"></div>';
+                
+                // Reset counters
+                successCount.textContent = '0';
+                failureCount.textContent = '0';
+                totalCount.textContent = '0';
+                
+                // Clear log and add initial messages
+                logContainer.innerHTML = '';
+                addLogEntry(`Initializing attack on ${phone}...`, 'info');
+                addLogEntry(`Sending ${intensity} packets through secure channels...`, 'info');
+                
+                // Simulate hacking process with messages
+                const hackingMessages = [
                     'Bypassing security protocols...',
                     'Establishing encrypted connection...',
                     'Routing through proxy network...',
-                    'Obfuscating transmission source...'
+                    'Obfuscating transmission source...',
+                    'Initiating packet transmission...'
                 ];
                 
                 let messageIndex = 0;
-                const loadingInterval = setInterval(() => {
-                    if (messageIndex < loadingMessages.length) {
-                        this.logMessage(loadingMessages[messageIndex]);
+                const messageInterval = setInterval(() => {
+                    if (messageIndex < hackingMessages.length) {
+                        addLogEntry(hackingMessages[messageIndex], 'info');
                         messageIndex++;
                     } else {
-                        clearInterval(loadingInterval);
+                        clearInterval(messageInterval);
+                        simulateAttackResults(phone, intensity);
                     }
                 }, 800);
+            }
+            
+            // Simulate attack results
+            function simulateAttackResults(phone, intensity) {
+                let success = 0;
+                let failure = 0;
+                let total = 0;
                 
-                try {
-                    const apiUrl = `${this.API_BASE_URL}?key=${this.API_KEY}&number=${recipientNumber}&count=${count}`;
-                    const response = await fetch(apiUrl);
-                    const data = await response.json();
-
-                    if (!response.ok || !data.success) {
-                        throw new Error(data.error || 'API returned an unexpected error');
+                const resultInterval = setInterval(() => {
+                    if (total < intensity) {
+                        // Randomly determine success or failure
+                        const isSuccess = Math.random() > 0.3;
+                        
+                        if (isSuccess) {
+                            success++;
+                            addLogEntry(`Packet ${total + 1} delivered successfully.`, 'success');
+                        } else {
+                            failure++;
+                            addLogEntry(`Packet ${total + 1} failed to deliver.`, 'error');
+                        }
+                        
+                        total++;
+                        
+                        // Update counters
+                        successCount.textContent = success;
+                        failureCount.textContent = failure;
+                        totalCount.textContent = total;
+                    } else {
+                        clearInterval(resultInterval);
+                        
+                        // Final status message
+                        addLogEntry(`Attack completed. ${success} successful, ${failure} failed.`, 'info');
+                        
+                        // Reset button state
+                        isAttacking = false;
+                        attackBtn.disabled = false;
+                        attackBtn.textContent = 'INITIATE ATTACK';
+                    }
+                }, 200);
+            }
+            
+            // Add entry to log
+            function addLogEntry(message, type = 'info') {
+                const entry = document.createElement('div');
+                entry.className = 'log-entry';
+                
+                const prefix = document.createElement('span');
+                prefix.className = 'log-prefix';
+                prefix.textContent = '>';
+                
+                const text = document.createElement('span');
+                text.className = `log-${type}`;
+                text.textContent = message;
+                
+                entry.appendChild(prefix);
+                entry.appendChild(text);
+                logContainer.appendChild(entry);
+                
+                // Scroll to bottom
+                logContainer.scrollTop = logContainer.scrollHeight;
+            }
+            
+            // Create matrix rain effect
+            function createMatrixRain() {
+                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&!?';
+                const container = document.getElementById('matrixRain');
+                
+                // Create columns of falling characters
+                for (let i = 0; i < 20; i++) {
+                    const column = document.createElement('div');
+                    column.style.position = 'absolute';
+                    column.style.top = '-10px';
+                    column.style.left = `${(100 / 20) * i}%`;
+                    column.style.width = `${100 / 20}%`;
+                    column.style.color = '#00ff41';
+                    column.style.fontSize = '12px';
+                    column.style.textAlign = 'center';
+                    column.style.opacity = '0.7';
+                    
+                    // Create falling animation
+                    let content = '';
+                    const length = Math.floor(Math.random() * 10) + 5;
+                    
+                    for (let j = 0; j < length; j++) {
+                        content += chars.charAt(Math.floor(Math.random() * chars.length));
                     }
                     
-                    clearInterval(loadingInterval);
-                    this.logMessage(`All ${data.totalRequests} packets transmitted successfully.`, 'SUCCESS');
-                    this.logMessage(`Operation completed in ${(Math.random() * 5 + 2).toFixed(2)} seconds.`, 'SUCCESS');
-                    this.displaySummary(data);
-
-                } catch (error) {
-                    clearInterval(loadingInterval);
-                    console.error("API Error:", error);
-                    this.logMessage(`Transmission failed: ${error.message}`, 'ERROR');
-                    this.logMessage('Check connection and try again.', 'ERROR');
-                } finally {
-                    this.setButtonState(false);
+                    column.textContent = content;
+                    column.style.animation = `fall ${(Math.random() * 5) + 3}s linear infinite`;
+                    column.style.animationDelay = `${Math.random() * 2}s`;
+                    
+                    container.appendChild(column);
                 }
+                
+                // Add falling animation
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes fall {
+                        0% { transform: translateY(-100px); }
+                        100% { transform: translateY(100vh); }
+                    }
+                `;
+                document.head.appendChild(style);
             }
-        };
-
-        document.addEventListener('DOMContentLoaded', () => SMSMatrix.init());
-        
-        // Prevent zoom on input focus for better mobile experience
-        document.addEventListener('touchstart', function() {
-            // Add empty listener to enable preventDefault
-        }, { passive: false });
-        
-        document.getElementById('recipient-number').addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            this.focus();
-        }, { passive: false });
+            
+            // Initialize matrix rain
+            createMatrixRain();
+            
+            // Improve mobile UX - close keyboard when tapping outside
+            document.addEventListener('touchstart', function(e) {
+                if (e.target !== phoneInput) {
+                    phoneInput.blur();
+                }
+            });
+        });
     </script>
 </body>
 </html>
