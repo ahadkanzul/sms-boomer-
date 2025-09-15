@@ -3,589 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AHAD SMS BOOMER v5.0</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <title>Ahad SMS Tool</title>
     <style>
-        :root {
-            --bg-dark: #0a0f0d; --surface-color: #101814; --border-color: #2a3b33;
-            --hacker-green: #00ff41; --hacker-red: #ff004f; --hacker-blue: #0084ff;
-            --text-color: #e6f1ea; --text-muted: #8c9b92; --font-mono: 'Fira Code', monospace;
-        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Poppins', sans-serif; background-color: var(--bg-dark); color: var(--text-color);
-            display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(0, 255, 65, 0.03) 0%, transparent 20%),
-                radial-gradient(circle at 90% 60%, rgba(0, 132, 255, 0.03) 0%, transparent 20%),
-                linear-gradient(to bottom, rgba(10, 15, 13, 0.9), rgba(10, 15, 13, 0.9)),
-                url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23333' fill-opacity='0.1'%3E%3Cpath d='M0 0h10v10H0V0zm10 10h10v10H10V10z'/%3E%3C/g%3E%3C/svg%3E");
-        }
-        
-        /* Terminal-like elements */
-        .scan-line {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(to bottom, transparent, var(--hacker-green), transparent);
-            animation: scan 4s linear infinite;
-            z-index: 1000;
-            pointer-events: none;
-            opacity: 0.6;
-        }
-        
-        @keyframes scan {
-            0% { top: 0%; }
-            100% { top: 100%; }
-        }
-        
-        .glow-effect {
-            text-shadow: 0 0 10px var(--hacker-green), 0 0 20px var(--hacker-green);
-        }
-        
-        .spinner { 
-            border: 4px solid rgba(0, 255, 65, 0.2); 
-            border-top: 4px solid var(--hacker-green); 
-            border-radius: 50%; 
-            width: 25px; 
-            height: 25px; 
-            animation: spin 1s linear infinite; 
-            display: inline-block;
-        }
-        
-        @keyframes spin { 
-            to { transform: rotate(360deg); } 
-        }
-        
-        /* --- Header & Main Container --- */
-        .site-header { 
-            text-align: center; 
-            margin-bottom: 30px; 
-            position: relative;
+            font-family: 'Arial', sans-serif; 
+            background-color: #0a0f0d; 
+            color: #e6f1ea;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh; 
             padding: 20px;
-            border-bottom: 1px solid var(--border-color);
-            width: 100%;
-            max-width: 800px;
         }
-        
-        .site-header h1 { 
-            font-family: var(--font-mono); 
-            font-size: 2.5rem; 
-            font-weight: 500; 
-            color: var(--hacker-green); 
-            margin-bottom: 5px; 
-            letter-spacing: 1px;
-        }
-        
-        .site-header p { 
-            font-family: var(--font-mono); 
-            color: var(--text-muted); 
-            font-size: 0.9rem;
-        }
-        
-        .version-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--hacker-green);
-            color: var(--bg-dark);
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-weight: bold;
-        }
-        
-        .control-panel-container { 
-            background-color: var(--surface-color); 
+        .container {
+            background-color: #101814; 
             border-radius: 10px; 
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
-            padding: 30px 40px; 
-            max-width: 800px; 
+            padding: 30px; 
+            max-width: 500px; 
             width: 100%; 
-            border: 1px solid var(--border-color);
-            position: relative;
-            overflow: hidden;
+            border: 1px solid #2a3b33;
+            margin-top: 30px;
         }
-        
-        .control-panel-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--hacker-green), transparent);
-            animation: pulse 3s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { opacity: 0.3; }
-            50% { opacity: 1; }
-            100% { opacity: 0.3; }
-        }
-        
-        /* Form Elements */
-        .input-group {
-            margin-bottom: 25px;
-        }
-        
-        .input-group label {
-            display: block;
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-            color: var(--text-muted);
-        }
-        
-        .input-field {
-            width: 100%;
-            background: rgba(42, 59, 51, 0.3);
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            padding: 12px 15px;
-            color: var(--text-color);
-            font-family: var(--font-mono);
-            transition: all 0.3s ease;
-        }
-        
-        .input-field:focus {
-            outline: none;
-            border-color: var(--hacker-green);
-            box-shadow: 0 0 0 2px rgba(0, 255, 65, 0.2);
-        }
-        
-        .intensity-selector {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        
-        .intensity-option {
-            flex: 1;
+        h1 {
+            color: #00ff41; 
+            margin-bottom: 5px; 
             text-align: center;
         }
-        
-        .intensity-option input[type="radio"] {
-            display: none;
+        .form-group {
+            margin-bottom: 20px;
         }
-        
-        .intensity-option label {
+        label {
             display: block;
-            padding: 10px;
-            background: rgba(42, 59, 51, 0.3);
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: var(--font-mono);
+            margin-bottom: 8px;
+            color: #8c9b92;
         }
-        
-        .intensity-option input[type="radio"]:checked + label {
-            background: rgba(0, 255, 65, 0.1);
-            border-color: var(--hacker-green);
-            color: var(--hacker-green);
-            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
-        }
-        
-        .action-button {
+        input {
             width: 100%;
-            background: linear-gradient(to right, var(--hacker-green), #00cc33);
-            color: var(--bg-dark);
+            padding: 12px;
+            border: 1px solid #2a3b33;
+            border-radius: 8px;
+            background: #0a0f0d;
+            color: #e6f1ea;
+        }
+        button {
+            background-color: #00ff41;
+            color: #0a0f0d;
             border: none;
-            border-radius: 5px;
-            padding: 15px;
-            font-family: var(--font-mono);
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
             font-weight: bold;
-            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
             margin-top: 10px;
         }
-        
-        .action-button:hover {
-            background: linear-gradient(to right, #00cc33, var(--hacker-green));
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
-        }
-        
-        .action-button:disabled {
-            background: #2a3b33;
-            color: var(--text-muted);
+        button:disabled {
+            background-color: #8c9b92;
             cursor: not-allowed;
-            box-shadow: none;
         }
-        
-        /* Log Display */
-        .log-container {
-            margin-top: 30px;
-            border-top: 1px solid var(--border-color);
-            padding-top: 20px;
-        }
-        
-        .log-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .log-header h3 {
-            font-family: var(--font-mono);
-            font-size: 1rem;
-            color: var(--hacker-green);
-        }
-        
-        .system-log {
-            background: rgba(16, 24, 20, 0.8);
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            height: 200px;
-            overflow-y: auto;
-            padding: 15px;
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-            line-height: 1.5;
-        }
-        
-        .system-log::-webkit-scrollbar {
-            width: 5px;
-        }
-        
-        .system-log::-webkit-scrollbar-track {
-            background: rgba(42, 59, 51, 0.3);
-        }
-        
-        .system-log::-webkit-scrollbar-thumb {
-            background: var(--hacker-green);
-            border-radius: 5px;
-        }
-        
-        .log-entry {
-            margin-bottom: 8px;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .result-summary {
-            display: flex;
-            justify-content: space-around;
+        .log {
             margin-top: 20px;
             padding: 15px;
-            background: rgba(42, 59, 51, 0.3);
-            border-radius: 5px;
-            border: 1px solid var(--border-color);
+            background-color: #0a0f0d;
+            border: 1px solid #2a3b33;
+            border-radius: 8px;
+            min-height: 100px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 14px;
         }
-        
-        .summary-item {
-            text-align: center;
+        .log-entry {
+            margin-bottom: 5px;
         }
-        
-        .summary-item strong {
-            display: block;
-            font-size: 1.8rem;
-            font-family: var(--font-mono);
-        }
-        
-        .summary-item .success {
-            color: var(--hacker-green);
-        }
-        
-        .summary-item .failure {
-            color: var(--hacker-red);
-        }
-        
-        .summary-item span {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        /* Matrix rain effect container */
-        #matrixRain {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0.1;
-        }
-        
-        /* Footer */
-        .site-footer {
+        .success { color: #00ff41; }
+        .error { color: #ff004f; }
+        .info { color: #8c9b92; }
+        footer {
             margin-top: 30px;
             text-align: center;
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            width: 100%;
-            max-width: 800px;
-            padding: 15px;
-            border-top: 1px solid var(--border-color);
-        }
-        
-        /* Responsive adjustments */
-        @media (max-width: 600px) {
-            .control-panel-container {
-                padding: 20px;
-            }
-            
-            .site-header h1 {
-                font-size: 1.8rem;
-            }
-            
-            .intensity-selector {
-                flex-direction: column;
-            }
+            color: #8c9b92;
+            font-size: 12px;
         }
     </style>
 </head>
 <body>
-    <div class="scan-line"></div>
-    <canvas id="matrixRain"></canvas>
-    
-    <header class="site-header">
-        <div class="version-badge">v5.0</div>
-        <h1 class="glow-effect">AHAD SMS BOOMER</h1>
-        <p>ADVANCED MESSAGE DELIVERY SYSTEM</p>
-    </header>
-    
-    <main class="control-panel-container">
-        <div class="input-group">
-            <label for="recipient-number">TARGET NODE</label>
-            <input type="text" id="recipient-number" class="input-field" placeholder="Enter 10-14 digit number" maxlength="14">
+    <div class="container">
+        <h1>SMS Tool</h1>
+        <p style="text-align: center; color: #8c9b92; margin-bottom: 20px;">Educational Purpose Only</p>
+        
+        <div class="form-group">
+            <label for="number">Phone Number:</label>
+            <input type="tel" id="number" placeholder="e.g., 923xxxxxxxxx">
         </div>
         
-        <div class="input-group">
-            <label>ATTACK INTENSITY</label>
-            <div class="intensity-selector">
-                <div class="intensity-option">
-                    <input type="radio" id="intensity-low" name="intensity" value="10" checked>
-                    <label for="intensity-low">LOW (10)</label>
-                </div>
-                <div class="intensity-option">
-                    <input type="radio" id="intensity-medium" name="intensity" value="25">
-                    <label for="intensity-medium">MED (25)</label>
-                </div>
-                <div class="intensity-option">
-                    <input type="radio" id="intensity-high" name="intensity" value="50">
-                    <label for="intensity-high">HIGH (50)</label>
-                </div>
-            </div>
+        <div class="form-group">
+            <label for="count">Number of Messages:</label>
+            <input type="number" id="count" value="5" min="1" max="10">
         </div>
         
-        <button id="trigger-btn" class="action-button">INITIATE ATTACK</button>
+        <button id="send-btn">Send Messages</button>
         
-        <div class="log-container">
-            <div class="log-header">
-                <h3>SYSTEM LOG</h3>
-                <span id="status-indicator">● STANDBY</span>
-            </div>
-            <div id="system-log-live" class="system-log"></div>
-        </div>
-    </main>
+        <div class="log" id="log"></div>
+    </div>
     
-    <footer class="site-footer">
-        <p>AHAD SMS BOOMER v5.0 | SECURE MESSAGE DELIVERY SYSTEM | &copy; 2023</p>
+    <footer>
+        <p>© 2024 Example. For educational purposes only.</p>
     </footer>
 
     <script>
-        // Matrix rain effect
-        function initMatrixRain() {
-            const canvas = document.getElementById('matrixRain');
-            const ctx = canvas.getContext('2d');
+        document.addEventListener('DOMContentLoaded', function() {
+            const sendBtn = document.getElementById('send-btn');
+            const numberInput = document.getElementById('number');
+            const countInput = document.getElementById('count');
+            const logElement = document.getElementById('log');
             
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            
-            const characters = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            const fontSize = 14;
-            const columns = canvas.width / fontSize;
-            
-            const drops = [];
-            for(let i = 0; i < columns; i++) {
-                drops[i] = 1;
-            }
-            
-            function draw() {
-                ctx.fillStyle = 'rgba(10, 15, 13, 0.05)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                
-                ctx.fillStyle = var(--hacker-green);
-                ctx.font = `${fontSize}px monospace`;
-                
-                for(let i = 0; i < drops.length; i++) {
-                    const text = characters.charAt(Math.floor(Math.random() * characters.length));
-                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                    
-                    if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                        drops[i] = 0;
-                    }
-                    
-                    drops[i]++;
-                }
-            }
-            
-            setInterval(draw, 33);
-            
-            window.addEventListener('resize', () => {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            });
-        }
-        
-        // Voice welcome function
-        function speakWelcome() {
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance();
-                utterance.text = "Welcome to AHAD S M S Boomer version 5.0. System initialized and ready.";
-                utterance.rate = 0.9;
-                utterance.pitch = 0.8;
-                window.speechSynthesis.speak(utterance);
-            }
-        }
-        
-        const SMSMatrix = {
-            init() {
-                this.ui = {
-                    recipientInput: document.getElementById('recipient-number'),
-                    triggerBtn: document.getElementById('trigger-btn'),
-                    systemLog: document.getElementById('system-log-live'),
-                    statusIndicator: document.getElementById('status-indicator')
-                };
-                this.API_BASE_URL = 'https://fak-sms-boomber.jokerkeep057.workers.dev/';
-                this.API_KEY = '32563'; // The password for your worker API
-                
-                initMatrixRain();
-                this.setupEventListeners();
-                this.logMessage('SYSTEM BOOT: AHAD SMS Boomer v5.0 initialized', 'INFO');
-                this.logMessage('SECURITY: Connection encrypted and secure', 'INFO');
-                this.logMessage('READY: Awaiting target parameters...', 'INFO');
-                
-                // Welcome voice on load
-                setTimeout(speakWelcome, 1000);
-            },
-
-            setupEventListeners() {
-                this.ui.triggerBtn.addEventListener('click', () => this.startProcess());
-                
-                // Add keypress event for Enter key
-                this.ui.recipientInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        this.startProcess();
-                    }
-                });
-            },
-
-            logMessage(text, type = 'INFO') {
+            // Add a log message
+            function addLog(message, type = 'info') {
                 const entry = document.createElement('div');
-                entry.className = 'log-entry';
-                let color = 'var(--text-muted)';
-                if (type === 'SUCCESS') color = 'var(--hacker-green)';
-                if (type === 'ERROR') color = 'var(--hacker-red)';
-                if (type === 'WARNING') color = 'var(--hacker-blue)';
-                entry.style.color = color;
-                
-                // Add timestamp
-                const now = new Date();
-                const timestamp = `[${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}]`;
-                
-                entry.textContent = `${timestamp} ${type}: ${text}`;
-                this.ui.systemLog.appendChild(entry);
-                this.ui.systemLog.scrollTop = this.ui.systemLog.scrollHeight;
-                
-                // Update status indicator
-                this.ui.statusIndicator.textContent = `● ${type}`;
-                this.ui.statusIndicator.style.color = color;
-            },
+                entry.className = `log-entry ${type}`;
+                entry.textContent = `> ${message}`;
+                logElement.appendChild(entry);
+                logElement.scrollTop = logElement.scrollHeight;
+            }
             
-            setButtonState(isLoading) {
-                this.ui.triggerBtn.disabled = isLoading;
-                this.ui.triggerBtn.innerHTML = isLoading ? '<div class="spinner"></div> PROCESSING' : 'INITIATE ATTACK';
-            },
-
-            displaySummary(data) {
-                const summaryDiv = document.createElement('div');
-                summaryDiv.className = 'result-summary';
-                summaryDiv.innerHTML = `
-                    <div class="summary-item">
-                        <strong class="success">${data.successCount}</strong>
-                        <span>SUCCESS</span>
-                    </div>
-                    <div class="summary-item">
-                        <strong class="failure">${data.failureCount}</strong>
-                        <span>FAILURE</span>
-                    </div>
-                    <div class="summary-item">
-                        <strong>${data.totalRequests}</strong>
-                        <span>TOTAL</span>
-                    </div>
-                `;
-                this.ui.systemLog.appendChild(summaryDiv);
-            },
-
-            async startProcess() {
-                const recipientNumber = this.ui.recipientInput.value.trim();
-                const count = document.querySelector('input[name="intensity"]:checked').value;
-
-                if (!recipientNumber || !/^\d{10,14}$/.test(recipientNumber)) {
-                    this.logMessage('Invalid Target Node (10-14 digits required).', 'ERROR');
-                    // Shake animation for invalid input
-                    this.ui.recipientInput.style.animation = 'shake 0.5s';
-                    setTimeout(() => {
-                        this.ui.recipientInput.style.animation = '';
-                    }, 500);
+            // Simulate sending messages
+            async function sendMessages() {
+                const number = numberInput.value.trim();
+                const count = parseInt(countInput.value);
+                
+                if (!number || !/^\d{10,14}$/.test(number)) {
+                    addLog('Please enter a valid phone number (10-14 digits)', 'error');
                     return;
                 }
-
-                this.setButtonState(true);
-                this.ui.systemLog.innerHTML = '';
-                this.logMessage(`Initializing attack on node ${recipientNumber}`, 'INFO');
-                this.logMessage(`Preparing ${count} message packets for transmission`, 'INFO');
-                this.logMessage('Establishing secure connection to API gateway', 'INFO');
                 
-                try {
-                    const apiUrl = `${this.API_BASE_URL}?key=${this.API_KEY}&number=${recipientNumber}&count=${count}`;
-                    this.logMessage(`Contacting endpoint: ${this.API_BASE_URL}`, 'INFO');
-                    
-                    // Simulate connection process for effect
+                if (count < 1 || count > 10) {
+                    addLog('Please enter a count between 1 and 10', 'error');
+                    return;
+                }
+                
+                sendBtn.disabled = true;
+                sendBtn.textContent = 'Sending...';
+                
+                addLog(`Starting to send ${count} messages to ${number}`, 'info');
+                
+                // Simulate API calls with delays
+                let successCount = 0;
+                
+                for (let i = 1; i <= count; i++) {
+                    // Simulate network delay
                     await new Promise(resolve => setTimeout(resolve, 1000));
                     
-                    const response = await fetch(apiUrl);
-                    const data = await response.json();
-
-                    if (!response.ok || !data.success) {
-                        throw new Error(data.error || 'The API returned an unexpected error.');
-                    }
+                    // Randomly determine success/failure for simulation
+                    const success = Math.random() > 0.2;
                     
-                    this.logMessage(`All ${data.totalRequests} packets transmitted successfully`, 'SUCCESS');
-                    this.logMessage(`Attack completed with ${data.successCount} successful deliveries`, 'SUCCESS');
-                    this.displaySummary(data);
-
-                } catch (error) {
-                    console.error("API Error:", error);
-                    this.logMessage(`Critical transmission error: ${error.message}`, 'ERROR');
-                    this.logMessage('Check network connection and API status', 'WARNING');
-                } finally {
-                    this.setButtonState(false);
-                    this.logMessage('System ready for next operation', 'INFO');
+                    if (success) {
+                        addLog(`Message ${i} sent successfully`, 'success');
+                        successCount++;
+                    } else {
+                        addLog(`Message ${i} failed to send`, 'error');
+                    }
                 }
+                
+                addLog(`Process completed. ${successCount}/${count} messages sent successfully`, 'info');
+                
+                sendBtn.disabled = false;
+                sendBtn.textContent = 'Send Messages';
             }
-        };
-
-        document.addEventListener('DOMContentLoaded', () => SMSMatrix.init());
+            
+            sendBtn.addEventListener('click', sendMessages);
+            
+            // Initial log message
+            addLog('System ready. Enter phone number and count.', 'info');
+        });
     </script>
 </body>
-</html>
+    </html>
