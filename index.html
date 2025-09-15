@@ -3,179 +3,296 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ahad SMS Tool</title>
+    <title>TikTok Video Downloader</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
         body {
-            font-family: 'Arial', sans-serif; 
-            background-color: #0a0f0d; 
-            color: #e6f1ea;
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            min-height: 100vh; 
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
         }
+        
         .container {
-            background-color: #101814; 
-            border-radius: 10px; 
-            padding: 30px; 
-            max-width: 500px; 
-            width: 100%; 
-            border: 1px solid #2a3b33;
-            margin-top: 30px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+            text-align: center;
         }
+        
         h1 {
-            color: #00ff41; 
-            margin-bottom: 5px; 
-            text-align: center;
-        }
-        .form-group {
+            color: #333;
             margin-bottom: 20px;
+            font-size: 28px;
         }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #8c9b92;
+        
+        .description {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.5;
         }
-        input {
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        input[type="url"] {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #2a3b33;
-            border-radius: 8px;
-            background: #0a0f0d;
-            color: #e6f1ea;
-        }
-        button {
-            background-color: #00ff41;
-            color: #0a0f0d;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            width: 100%;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        button:disabled {
-            background-color: #8c9b92;
-            cursor: not-allowed;
-        }
-        .log {
-            margin-top: 20px;
             padding: 15px;
-            background-color: #0a0f0d;
-            border: 1px solid #2a3b33;
+            border: 2px solid #e0e0e0;
             border-radius: 8px;
-            min-height: 100px;
-            max-height: 200px;
-            overflow-y: auto;
-            font-family: monospace;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="url"]:focus {
+            border-color: #2575fc;
+            outline: none;
+        }
+        
+        button {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+            font-weight: 600;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .result {
+            margin-top: 25px;
+            display: none;
+        }
+        
+        .video-info {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .video-info h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .video-info p {
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .download-btn:hover {
+            background-color: #45a049;
+        }
+        
+        .loading {
+            display: none;
+            margin: 20px 0;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error {
+            color: #e74c3c;
+            margin-top: 15px;
+            display: none;
+            padding: 10px;
+            background-color: #fdeded;
+            border-radius: 6px;
+        }
+        
+        .example {
+            margin-top: 25px;
             font-size: 14px;
+            color: #777;
         }
-        .log-entry {
-            margin-bottom: 5px;
-        }
-        .success { color: #00ff41; }
-        .error { color: #ff004f; }
-        .info { color: #8c9b92; }
-        footer {
-            margin-top: 30px;
-            text-align: center;
-            color: #8c9b92;
-            font-size: 12px;
+        
+        .example a {
+            color: #2575fc;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>SMS Tool</h1>
-        <p style="text-align: center; color: #8c9b92; margin-bottom: 20px;">Educational Purpose Only</p>
+        <h1>Ahad TikTok Video Downloader</h1>
+        <p class="description">Paste the URL of a TikTok video below to download it. The download is powered by a secure API that fetches videos without watermarks.</p>
         
-        <div class="form-group">
-            <label for="number">Phone Number:</label>
-            <input type="tel" id="number" placeholder="e.g., 923xxxxxxxxx">
+        <div class="input-group">
+            <input type="url" id="tiktokUrl" placeholder="Paste TikTok video URL here" autocomplete="off">
         </div>
         
-        <div class="form-group">
-            <label for="count">Number of Messages:</label>
-            <input type="number" id="count" value="5" min="1" max="10">
+        <button id="downloadBtn">Download Video</button>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Processing your request...</p>
         </div>
         
-        <button id="send-btn">Send Messages</button>
+        <div class="error" id="error"></div>
         
-        <div class="log" id="log"></div>
+        <div class="result" id="result">
+            <div class="video-info">
+                <h3>Video Information</h3>
+                <p id="videoAuthor"></p>
+                <p id="videoDesc"></p>
+                <p id="videoDuration"></p>
+            </div>
+            <a href="#" class="download-btn" id="videoLink" download>Download MP4</a>
+        </div>
+        
+        <div class="example">
+            <p>Example URL: <a href="#" id="exampleUrl">https://www.tiktok.com/@kamran_ke_memes/video/7549275353315822856</a></p>
+        </div>
     </div>
-    
-    <footer>
-        <p>© 2024 Example. For educational purposes only.</p>
-    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const sendBtn = document.getElementById('send-btn');
-            const numberInput = document.getElementById('number');
-            const countInput = document.getElementById('count');
-            const logElement = document.getElementById('log');
+            const tiktokUrlInput = document.getElementById('tiktokUrl');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const loadingElement = document.getElementById('loading');
+            const errorElement = document.getElementById('error');
+            const resultElement = document.getElementById('result');
+            const videoLink = document.getElementById('videoLink');
+            const videoAuthor = document.getElementById('videoAuthor');
+            const videoDesc = document.getElementById('videoDesc');
+            const videoDuration = document.getElementById('videoDuration');
+            const exampleUrl = document.getElementById('exampleUrl');
             
-            // Add a log message
-            function addLog(message, type = 'info') {
-                const entry = document.createElement('div');
-                entry.className = `log-entry ${type}`;
-                entry.textContent = `> ${message}`;
-                logElement.appendChild(entry);
-                logElement.scrollTop = logElement.scrollHeight;
-            }
+            // Set example URL
+            exampleUrl.href = 'https://www.tiktok.com/@kamran_ke_memes/video/7549275353315822856';
             
-            // Simulate sending messages
-            async function sendMessages() {
-                const number = numberInput.value.trim();
-                const count = parseInt(countInput.value);
+            // When user clicks on example URL
+            exampleUrl.addEventListener('click', function(e) {
+                e.preventDefault();
+                tiktokUrlInput.value = this.href;
+            });
+            
+            // Handle download button click
+            downloadBtn.addEventListener('click', function() {
+                const url = tiktokUrlInput.value.trim();
                 
-                if (!number || !/^\d{10,14}$/.test(number)) {
-                    addLog('Please enter a valid phone number (10-14 digits)', 'error');
+                // Validate URL
+                if (!url) {
+                    showError('Please enter a TikTok URL');
                     return;
                 }
                 
-                if (count < 1 || count > 10) {
-                    addLog('Please enter a count between 1 and 10', 'error');
+                if (!isValidTikTokUrl(url)) {
+                    showError('Please enter a valid TikTok URL');
                     return;
                 }
                 
-                sendBtn.disabled = true;
-                sendBtn.textContent = 'Sending...';
+                // Reset previous results
+                hideError();
+                resultElement.style.display = 'none';
+                loadingElement.style.display = 'block';
                 
-                addLog(`Starting to send ${count} messages to ${number}`, 'info');
+                // Encode the URL
+                const encodedUrl = encodeURIComponent(url);
                 
-                // Simulate API calls with delays
-                let successCount = 0;
+                // Create API URL
+                const apiUrl = `https://fak-tiktok-downloader.jokerkeep057.workers.dev/?key=32563&url=${encodedUrl}`;
                 
-                for (let i = 1; i <= count; i++) {
-                    // Simulate network delay
-                    await new Promise(resolve => setTimeout(resolve, 1000));
-                    
-                    // Randomly determine success/failure for simulation
-                    const success = Math.random() > 0.2;
-                    
-                    if (success) {
-                        addLog(`Message ${i} sent successfully`, 'success');
-                        successCount++;
-                    } else {
-                        addLog(`Message ${i} failed to send`, 'error');
-                    }
-                }
-                
-                addLog(`Process completed. ${successCount}/${count} messages sent successfully`, 'info');
-                
-                sendBtn.disabled = false;
-                sendBtn.textContent = 'Send Messages';
+                // Fetch video data
+                fetch(apiUrl)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        loadingElement.style.display = 'none';
+                        
+                        if (data.status === 'success') {
+                            const videoData = data.data;
+                            
+                            // Display video information
+                            videoAuthor.textContent = `Author: @${videoData.author || 'Unknown'}`;
+                            videoDesc.textContent = `Description: ${videoData.description || 'No description'}`;
+                            videoDuration.textContent = `Duration: ${videoData.duration || 'Unknown'} seconds`;
+                            
+                            // Set download link
+                            videoLink.href = videoData.video_url;
+                            
+                            // Show result section
+                            resultElement.style.display = 'block';
+                        } else {
+                            showError(data.message || 'Failed to fetch video information');
+                        }
+                    })
+                    .catch(error => {
+                        loadingElement.style.display = 'none';
+                        showError('Error: ' + error.message);
+                    });
+            });
+            
+            // Function to validate TikTok URL
+            function isValidTikTokUrl(url) {
+                const pattern = /^https?:\/\/(www\.)?tiktok\.com\/@.+\/video\/\d+(\/)?/;
+                return pattern.test(url);
             }
             
-            sendBtn.addEventListener('click', sendMessages);
+            // Function to show error message
+            function showError(message) {
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+            }
             
-            // Initial log message
-            addLog('System ready. Enter phone number and count.', 'info');
+            // Function to hide error message
+            function hideError() {
+                errorElement.style.display = 'none';
+            }
         });
     </script>
 </body>
-    </html>
+</html>
